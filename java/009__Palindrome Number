@@ -1,0 +1,21 @@
+class Solution {
+    public boolean isPalindrome(int x) {
+        if(x<0) return false;
+        int div = 1; int num = x;
+        
+        // 增大div直到与x的位数相等（for example:x=12321,div=10000）
+        while(num/div >= 10){
+            div *= 10;
+        }
+        // left拿到数的第一位数，right拿到数的最后一位数，判断是否相等
+        // 相等的话 num要进行更新 把left,right两个数字踢掉
+        while(num!=0){
+            int left = num/div;
+            int right = num%10;
+            if(left != right)return false;
+            num = (num-left*div)/10;
+            div/=100;
+        }
+        return true;
+    }
+}
