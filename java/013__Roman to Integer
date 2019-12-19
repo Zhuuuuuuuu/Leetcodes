@@ -1,0 +1,25 @@
+class Solution {
+    public int romanToInt(String s) {
+        if(s == null || s.length() ==0) return 0;
+        int result = 0;
+        if(s.indexOf("CM")!=-1) result -=200;
+        if(s.indexOf("CD")!=-1) result -=200;
+        if(s.indexOf("XC")!=-1) result -=20;
+        if(s.indexOf("XL")!=-1) result -=20;
+        if(s.indexOf("IX")!=-1) result -=2;
+        if(s.indexOf("IV")!=-1) result -=2;
+        for(char c:s.toCharArray()){
+            if(c=='M') result += 1000;
+            if(c=='D') result += 500;
+            if(c=='C') result += 100;
+            if(c=='L') result += 50;
+            if(c=='X') result += 10;
+            if(c=='V') result += 5;
+            if(c=='I') result += 1;
+        }
+        return result;   
+    }
+}
+
+
+//出现CM CD XC XL IX IV等数字，相当于减去两倍的和
