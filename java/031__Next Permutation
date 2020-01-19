@@ -1,0 +1,29 @@
+class Solution {
+    public void nextPermutation(int[] nums) {
+        if(nums == null || nums.length == 0)return;
+        int replace = nums.length-2;
+        while(replace >= 0 ){
+            if(nums[replace] < nums[replace+1]) break;
+            replace --;
+        }
+        if (replace < 0){
+            Arrays.sort(nums);
+            return;
+        }
+        int lgr = replace + 1;
+        while(lgr < nums.length && nums[lgr] > nums[replace]){
+            lgr ++ ;
+        }
+        int tmp = nums[replace];
+        nums[replace] = nums[lgr - 1];
+        nums[lgr-1] = tmp;
+        Arrays.sort(nums,replace+1,nums.length); 
+    }
+}
+
+1.从倒数第二个位置开始，索引是replace
+2.不断向前比较，找到需要替换的索引
+3.如果没找到，直接返sorted array
+4.如果找到了 从替换的replace索引开始，不断向后去寻找比这个数大的并且最相邻的那个数lgr
+5.交换replace和lgr这个数的位置
+6.对replace后面的数进行排序，replace+1到array的最后
