@@ -42,7 +42,7 @@ class Solution {
 1.第一行 第一列：如果有0 则设置为true
 2.从[1,1]的位置开始扫描，如果出现0，则同时把本行第一个元素和本列第一个元素设置为0
 3.如果第一行或者第一列中有元素为0，则把本行本列的元素都设置为0
-4.检查firstRowzero和firstColzero 如果有0，则把本行或者本列设置为0
+4.检查firstRowzero和firstColzero 如果有0，则把第一行或者第一列设置为0
 
 Solution 2:
 class Solution {
