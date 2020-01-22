@@ -1,0 +1,68 @@
+思路一: 用 O(m+n)O(m+n)额外空间
+
+两遍扫matrix,第一遍用集合记录哪些行,哪些列有0;第二遍置0
+
+思路二: 用O(1)O(1)空间
+
+关键思想: 用matrix第一行和第一列记录该行该列是否有0,作为标志位
+
+但是对于第一行,和第一列要设置一个标志位,为了防止自己这一行(一列)也有0的情况.注释写在代码里,直接看代码很好理解!
+
+Solution 1:
+
+class Solution:
+    def setZeroes(self, matrix: List[List[int]]) -> None:
+        row = len(matrix)
+        col = len(matrix[0])
+        row_zero = set()
+        col_zero = set()
+        for i in range(row):
+            for j in range(col):
+                if matrix[i][j] == 0:
+                    row_zero.add(i)
+                    col_zero.add(j)
+        for i in range(row):
+            for j in range(col):
+                if i in row_zero or j in col_zero:
+                    matrix[i][j] = 0
+                    
+Solution 2:
+
+class Solution:
+    def setZeroes(self, matrix: List[List[int]]) -> None:
+        """
+        Do not return anything, modify matrix in-place instead.
+        """
+        row = len(matrix)
+        col = len(matrix[0])
+        row0_flag = False
+        col0_flag = False
+        # 找第一行是否有0
+        for j in range(col):
+            if matrix[0][j] == 0:
+                row0_flag = True
+                break
+        # 第一列是否有0
+        for i in range(row):
+            if matrix[i][0] == 0:
+                col0_flag = True
+                break
+
+        # 把第一行或者第一列作为 标志位
+        for i in range(1, row):
+            for j in range(1, col):
+                if matrix[i][j] == 0:
+                    matrix[i][0] = matrix[0][j] = 0
+        #print(matrix)
+        # 置0
+        for i in range(1, row):
+            for j in range(1, col):
+                if matrix[i][0] == 0 or matrix[0][j] == 0:
+                    matrix[i][j] = 0
+
+        if row0_flag:
+            for j in range(col):
+                matrix[0][j] = 0
+        if col0_flag:
+            for i in range(row):
+                matrix[i][0] = 0
