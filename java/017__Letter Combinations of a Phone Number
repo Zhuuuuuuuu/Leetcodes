@@ -1,0 +1,70 @@
+Solution 1: DFS
+
+Letter Combinations of a Phone Number
+
+class Solution {
+    public List<String> letterCombinations(String digits) {
+        List<String> res = new LinkedList<String>();
+        if(digits == null || digits.length() == 0) return res;
+        HashMap<Character, char[]> map = new HashMap<Character, char[]>();
+        map.put('2',new char[]{'a','b','c'});
+        map.put('3',new char[]{'d','e','f'});
+        map.put('4',new char[]{'g','h','i'});
+        map.put('5',new char[]{'j','k','l'});
+        map.put('6',new char[]{'m','n','o'});
+        map.put('7',new char[]{'p','q','r','s'});
+        map.put('8',new char[]{'t','u','v'});
+        map.put('9',new char[]{'w','x','y','z'});
+
+        helper("",0,digits,res,map);
+        return res;
+    }
+    public void helper(String curr, int currIdx,String digits, List<String> res, HashMap<Character ,char[]> map){
+        if(currIdx == digits.length()){
+            res.add(curr);
+        }else {
+            char c = digits.charAt(currIdx);
+            if(map.containsKey(c)){
+                for(char ch: map.get(c)){
+                    helper(curr+ch,currIdx+1,digits,res,map);
+                }
+            }
+        }
+    }
+}
+
+
+Solution 2:BFS
+
+Letter Combinations of a Phone Number
+
+class Solution {
+	public List<String> letterCombinations(String digits) {
+		if(digits==null || digits.length()==0) {
+			return new ArrayList<String>();
+		}
+		//一个映射表，第二个位置是"abc“,第三个位置是"def"。。。
+		//这里也可以用map，用数组可以更节省点内存
+		String[] letter_map = {
+			" ","*","abc","def","ghi","jkl","mno","pqrs","tuv","wxyz"
+		};
+		List<String> res = new ArrayList<>();
+		//先往队列中加入一个空字符
+		res.add("");
+		for(int i=0;i<digits.length();i++) {
+			//由当前遍历到的字符，取字典表中查找对应的字符串
+			String letters = letter_map[digits.charAt(i)-'0'];
+			int size = res.size();
+			//计算出队列长度后，将队列中的每个元素挨个拿出来
+			for(int j=0;j<size;j++) {
+				//每次都从队列中拿出第一个元素
+				String tmp = res.remove(0);
+				//然后跟"def"这样的字符串拼接，并再次放到队列中
+				for(int k=0;k<letters.length();k++) {
+					res.add(tmp+letters.charAt(k));
+				}
+			}
+		}
+		return res;
+	}
+}
