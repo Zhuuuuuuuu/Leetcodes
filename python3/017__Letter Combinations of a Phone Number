@@ -56,7 +56,7 @@ class Solution(object):
 			# 由当前遍历到的字符，取字典表中查找对应的字符串
 			letters = d[ord(i)-48]
 			# 计算出队列长度后，将队列中的每个元素挨个拿出来
-			for _ in xrange(size):
+			for x in range(size):
 				# 每次都从队列中拿出第一个元素
 				tmp = res.pop(0)
 				# 然后跟"def"这样的字符串拼接，并再次放到队列中
