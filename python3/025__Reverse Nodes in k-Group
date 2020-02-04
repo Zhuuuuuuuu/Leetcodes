@@ -1,0 +1,27 @@
+Solution 1:stack
+# Definition for singly-linked list.
+# class ListNode:
+#     def __init__(self, x):
+#         self.val = x
+#         self.next = None
+
+class Solution:
+    def reverseKGroup(self, head: ListNode, k: int) -> ListNode:
+        if not head: return None
+        stack = []
+        dummy = ListNode(0)
+        dummy.next = head
+        current = dummy
+        next = dummy.next
+
+        while next:
+            for i in range(k):
+                if next:
+                    stack.append(next)
+                    next = next.next
+            if len(stack) != k: return dummy.next
+            while len(stack) != 0:
+                current.next = stack.pop()
+                current = current.next
+            current.next = next
+        return dummy.next
