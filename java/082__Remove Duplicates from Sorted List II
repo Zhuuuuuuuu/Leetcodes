@@ -1,0 +1,36 @@
+空间需要：指向当前节点的curr指针 指向前一个节点的pre指针 最后我们需要返回的real结果
+遍历链表，如果curr和pre的值不一样并且curr和curr.next的值不一样，那么real节点记下结果
+realNode记下结果之后，pre移动到当前curr,curr向后移动一位，同时要把preNode.next断掉（不断掉会发生问题）
+
+/**
+ * Definition for singly-linked list.
+ * public class ListNode {
+ *     int val;
+ *     ListNode next;
+ *     ListNode(int x) { val = x; }
+ * }
+ */
+class Solution {
+    public ListNode deleteDuplicates(ListNode head) {
+        if(head == null) return null;
+        ListNode dummy     = new ListNode(0);
+        ListNode preNode   = dummy;
+        ListNode currNode  = head;
+        ListNode realNode  = dummy;
+        while(currNode != null){
+            if((preNode == dummy || currNode.val != preNode.val) && (currNode.next == null || currNode.val != currNode.next.val)){
+                realNode.next = currNode;
+                realNode = currNode;
+            }
+            preNode = currNode;
+            currNode = currNode.next;
+            preNode.next = null; //断掉链接
+        }
+        return dummy.next;
+    }
+}
+
+作者：zhuuuu-2
+链接：https://leetcode-cn.com/problems/remove-duplicates-from-sorted-list-ii/solution/kuai-man-zhi-zhen-pythonjava-by-zhuuuu-2/
+来源：力扣（LeetCode）
+著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。
