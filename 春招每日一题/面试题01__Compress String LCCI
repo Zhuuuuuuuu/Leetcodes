@@ -1,0 +1,44 @@
+#双指针
+
+Java Solution:
+class Solution {
+    public String compressString(String S) {
+        int n = S.length();
+        int i = 0;
+        StringBuilder sb = new StringBuilder();
+        while(i < n){
+            int j = i;  //两个指针都从头开始遍历
+            while (j < n && S.charAt(j) == S.charAt(i)){
+                j++;
+            }
+            sb.append(S.charAt(i)); //输出这个字母
+            sb.append(j-i);        //输出此字母出现的次数
+            i = j;                //更新慢指针位置
+        }
+
+        String res = sb.toString();  //将sb转换成字符串
+        if(res.length() < S.length()){
+            return res;
+        }else {
+            return S;
+        }
+    }
+}
+
+
+Python Solution:
+class Solution:
+    def compressString(self, S: str) -> str:
+        n = len(S)
+        res = ""
+        i = 0
+        while i < n:
+            j = i
+            while j < n and S[j] == S[i]:
+                j+=1 
+            res += S[i] + str(j-i)
+            i = j
+        if len (res) < len(S):
+            return res
+        else:
+            return S
