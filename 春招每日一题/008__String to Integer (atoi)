@@ -1,0 +1,62 @@
+
+思路：
+- 去掉前面的空格
+- 判断正负号
+- 越界检查
+
+这道题目如果只是简单地字符串转整数的话，就是简单地 ans = ans * 10 + digit。
+但是注意这道题目可能会超过integer的最大表示！
+也就是说会在某一步 ans * 10 + digit > Integer.MAX_VALUE。
+*10 和 +digit 都有可能越界，那么只要把这些都移到右边去就可以了。
+ans > (Integer.MAX_VALUE - digit) / 10 就是越界。
+
+
+
+Java Solution:
+class Solution {
+    public int myAtoi(String str) {
+        char[] chars = str.toCharArray();
+        int n   = chars.length;
+        int idx = 0;
+
+        // 这里' '中是一个空格
+        while(idx < n && chars[idx] == ' '){
+            //去掉前面的空格
+            idx++;
+        }
+
+        if(idx == n){
+            //如果去掉空格直接到达末尾
+            return 0;
+        }
+
+        // 正负标识符
+        boolean flag = false;
+        // 遇到负号
+        if(chars[idx] == '-'){
+           flag = true;
+           idx++; 
+        } else if(chars[idx] == '+'){
+            // 遇到正号
+            idx++;
+        } else if (!Character.isDigit(chars[idx])) {
+            // 其他符号
+            return 0;
+        }
+
+        int ans = 0;
+        // 一直遍历到最后并且字符是数字的话
+        while(idx < n && Character.isDigit(chars[idx])){
+            int digit = chars[idx] - '0';
+            // 如果越界了（MAX和MIN判断同样）
+            if(ans > (Integer.MAX_VALUE - digit)/10){
+                // 本来应该是 ans * 10 + digit > Integer.MAX_VALUE
+                // 但是 *10 和 + digit 都有可能越界，所有都移动到右边去就可以了。
+                return flag?Integer.MIN_VALUE:Integer.MAX_VALUE;
+            }
+            ans = ans * 10 + digit;
+            idx++;
+        }
+        return flag?-ans:ans;
+    }
+}
